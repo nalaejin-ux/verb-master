@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>동사 마스터 💖</title>
+
+<!-- PWA / Apple 홈 화면 앱 설정 -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="동사마스터">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#ff69a8">
+<meta name="description" content="불규칙 동사 100개 완전정복! 과거형·과거분사형 암기 앱">
+
+<!-- PWA manifest -->
+<link rel="manifest" href="manifest.json">
+
+<!-- Apple touch icons -->
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="icon" type="image/png" href="icon-192.png">
+
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#fff5f9;
+  --surface:#ffffff;
+  --surface2:#fff0f6;
+  --pink:#ff69a8;
+  --pink2:#ff9dca;
+  --pink-pale:#ffe4f0;
+  --pink-border:rgba(255,105,168,0.25);
+  --yellow:#ffcc00;
+  --yellow2:#ffe14d;
+  --yellow-pale:#fffacc;
+  --yellow-border:rgba(255,204,0,0.35);
+  --orange:#ff8800;
+  --green:#00c875;
+  --red:#ff3355;
+  --purple:#9b5cf5;
+  --text:#2d1228;
+  --muted:#b085a0;
+  --shadow:rgba(255,105,168,0.13);
+}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;top:-150px;right:-150px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(255,204,0,.14) 0%,transparent 65%);pointer-events:none;z-index:0}
+body::after{content:'';position:fixed;bottom:-120px;left:-120px;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(255,105,168,.12) 0%,transparent 65%);pointer-events:none;z-index:0}
+
+.wrap{max-width:740px;margin:0 auto;padding:18px 16px 80px;position:relative;z-index:1}
+
+/* ─── HEADER ─── */
+.header{display:flex;align-items:center;justify-content:space-between;padding:16px 0 20px;flex-wrap:wrap;gap:10px}
+.logo{font-family:'Black Han Sans',sans-serif;font-size:1.65rem;color:var(--pink);letter-spacing:-1px}
+.logo span{color:var(--yellow)}
+.header-nav{display:flex;gap:7px;flex-wrap:wrap}
+.nav-btn{background:var(--surface);border:2px solid var(--pink-border);border-radius:12px;padding:7px 13px;color:var(--pink);font-weight:800;font-size:.78rem;cursor:pointer;transition:all .2s;box-shadow:0 2px 8px var(--shadow);font-family:'Noto Sans KR',sans-serif}
+.nav-btn:hover{background:var(--pink-pale);border-color:var(--pink)}
+.nav-btn.active{background:var(--pink-pale);border-color:var(--pink)}
+
+/* ─── SCOREBAR ─── */
+.scorebar{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px}
+.stile{background:var(--surface);border:2px solid var(--pink-border);border-radius:16px;padding:11px 8px;text-align:center;box-shadow:0 3px 10px var(--shadow)}
+.stile .slabel{font-size:.67rem;color:var(--muted);font-weight:800;margin-bottom:3px}
+.stile .sval{font-family:'Black Han Sans',sans-serif;font-size:1.5rem}
+.s1 .sval{color:var(--pink)}.s2 .sval{color:var(--orange)}.s3 .sval{color:var(--green)}.s4 .sval{color:var(--purple)}
+
+/* ─── PROGRESS ─── */
+.prog-section{margin-bottom:20px}
+.prog-labels{display:flex;justify-content:space-between;font-size:.76rem;color:var(--muted);font-weight:800;margin-bottom:5px}
+.prog-track{height:10px;background:var(--pink-pale);border-radius:99px;overflow:hidden;border:1px solid var(--pink-border)}
+.prog-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--pink),var(--yellow));transition:width .6s cubic-bezier(.4,0,.2,1);box-shadow:0 0 8px rgba(255,105,168,.4)}
+
+/* ─── SCREENS ─── */
+.screen{display:none}.screen.on{display:block}
+
+/* ════════════════════
+   HOME
+════════════════════ */
+.home-hero{text-align:center;padding:28px 0 24px}
+.home-hero h1{font-family:'Black Han Sans',sans-serif;font-size:clamp(1.9rem,7vw,2.9rem);line-height:1.15;margin-bottom:10px}
+.home-hero h1 em{font-style:normal;color:var(--pink)}
+.home-hero p{color:var(--muted);font-size:.9rem;line-height:1.65;margin-bottom:26px}
+.mode-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.mcard{background:var(--surface);border:2px solid var(--pink-border);border-radius:20px;padding:20px 16px;cursor:pointer;transition:all .22s;text-align:left;position:relative;overflow:hidden;box-shadow:0 4px 14px var(--shadow)}
+.mcard:hover{transform:translateY(-3px);box-shadow:0 9px 26px var(--shadow)}
+.mcard.mc-a:hover{border-color:var(--pink);background:var(--pink-pale)}
+.mcard.mc-b:hover{border-color:var(--purple);background:#f2ecff}
+.mcard.mc-c:hover{border-color:var(--orange);background:#fff4e6}
+.mcard.mc-d:hover{border-color:var(--yellow);background:var(--yellow-pale)}
+.mcard.mc-e:hover{border-color:var(--green);background:#e6fff4}
+.micon{font-size:2rem;margin-bottom:8px;display:block}
+.mtitle{font-family:'Black Han Sans',sans-serif;font-size:1.05rem;margin-bottom:4px}
+.mdesc{font-size:.76rem;color:var(--muted);line-height:1.45}
+.mbadge{position:absolute;top:9px;right:9px;font-size:.63rem;padding:2px 8px;border-radius:99px;font-weight:800;display:none}
+.mbadge-purple{background:#f2ecff;color:var(--purple);border:1px solid #c4a0ff}
+.mbadge-orange{background:#fff4e6;color:var(--orange);border:1px solid #ffbb70}
+
+/* ════════════════════
+   QUIZ
+════════════════════ */
+.quiz-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.round-info{font-family:'Black Han Sans',sans-serif;font-size:.88rem;color:var(--muted)}
+.round-info strong{color:var(--text);font-size:1.1rem}
+.qdots{display:flex;gap:5px}
+.qdot{width:11px;height:11px;border-radius:50%;background:var(--pink-pale);border:2px solid var(--pink-border);transition:all .3s}
+.qdot.cur{background:var(--pink);border-color:var(--pink);box-shadow:0 0 7px rgba(255,105,168,.55)}
+.qdot.ok{background:var(--green);border-color:var(--green)}
+.qdot.ng{background:var(--red);border-color:var(--red)}
+.qdot.sk{background:var(--purple);border-color:var(--purple)}
+
+.qcard{background:var(--surface);border:2px solid var(--pink-border);border-radius:26px;padding:28px 24px 22px;margin-bottom:13px;position:relative;overflow:hidden;box-shadow:0 6px 24px var(--shadow)}
+.qcard::before{content:'';position:absolute;top:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--pink),var(--yellow),var(--pink2))}
+.qnum{font-size:.7rem;color:var(--muted);font-weight:800;letter-spacing:1px;margin-bottom:3px}
+.qmeaning{font-size:1rem;color:var(--muted);font-weight:700;margin-bottom:2px}
+.qpresent{font-family:'Black Han Sans',sans-serif;font-size:clamp(2.3rem,8vw,3.3rem);color:var(--pink);line-height:1;margin-bottom:10px;letter-spacing:1px}
+.qflags{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:16px;min-height:4px}
+.flag{display:inline-flex;align-items:center;gap:3px;border-radius:99px;padding:3px 11px;font-size:.71rem;font-weight:800}
+.flag-weak{background:#fff4e6;border:1px solid #ffbb70;color:var(--orange)}
+.flag-skip{background:#f2ecff;border:1px solid #c4a0ff;color:var(--purple)}
+
+.input-rows{display:flex;flex-direction:column;gap:11px;margin-bottom:13px}
+.irow{display:grid;grid-template-columns:86px 1fr;gap:9px;align-items:center}
+.ilabel{font-size:.76rem;color:var(--muted);text-align:right;line-height:1.3;font-weight:800}
+.ilabel strong{display:block;color:var(--text);font-size:.84rem}
+.vfield{width:100%;background:var(--surface2);border:2px solid var(--pink-border);border-radius:13px;padding:13px 16px;color:var(--text);font-family:'Black Han Sans',sans-serif;font-size:1.3rem;letter-spacing:1px;outline:none;transition:all .2s;-webkit-appearance:none}
+.vfield::placeholder{color:var(--pink2);font-size:.95rem;font-family:'Noto Sans KR',sans-serif;font-weight:400}
+.vfield:focus{border-color:var(--pink);background:#fff0f6;box-shadow:0 0 0 3px rgba(255,105,168,.12)}
+.vfield.ok{border-color:var(--green);background:#e8fff4;color:var(--green)}
+.vfield.ng{border-color:var(--red);background:#fff0f4;color:var(--red)}
+.vfield:disabled{opacity:.7;cursor:not-allowed}
+
+.ans-reveal{background:var(--yellow-pale);border:2px solid var(--yellow-border);border-radius:16px;padding:16px;margin-top:2px;display:none;animation:slideDown .28s ease}
+.ans-reveal.show{display:block}
+.ans-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;text-align:center;margin-bottom:7px}
+.agi .agl{font-size:.65rem;color:var(--muted);font-weight:800;margin-bottom:2px}
+.agi .agw{font-family:'Black Han Sans',sans-serif;font-size:1.1rem}
+.ag-present .agw{color:var(--pink)}.ag-past .agw{color:var(--orange)}.ag-pp .agw{color:var(--purple)}
+.rmsg{text-align:center;font-size:.88rem;font-weight:800}
+.rmsg.ok{color:var(--green)}.rmsg.ng{color:var(--red)}.rmsg.sk{color:var(--purple)}
+
+.arow{display:flex;gap:8px}
+.btn-check{flex:1;background:linear-gradient(135deg,var(--pink),var(--pink2));border:none;border-radius:15px;padding:15px;color:#fff;font-family:'Black Han Sans',sans-serif;font-size:1.1rem;cursor:pointer;transition:all .2s;box-shadow:0 4px 16px rgba(255,105,168,.35)}
+.btn-check:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(255,105,168,.45)}
+.btn-check:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.btn-skip{background:var(--surface);border:2px solid #c4a0ff;border-radius:15px;padding:15px 16px;color:var(--purple);font-family:'Black Han Sans',sans-serif;font-size:.98rem;cursor:pointer;transition:all .2s;white-space:nowrap}
+.btn-skip:hover{background:#f2ecff}
+.btn-next{background:var(--surface);border:2px solid var(--yellow-border);border-radius:15px;padding:15px 18px;color:var(--orange);font-family:'Black Han Sans',sans-serif;font-size:.98rem;cursor:pointer;transition:all .2s}
+.btn-next:hover{background:var(--yellow-pale)}
+
+/* ════════════════════
+   ROUND RESULT
+════════════════════ */
+.rscreen{text-align:center;padding:14px 0}
+.rbig{font-family:'Black Han Sans',sans-serif;font-size:clamp(3.5rem,12vw,5rem);line-height:1;margin-bottom:4px}
+.rgrade{font-family:'Black Han Sans',sans-serif;font-size:1.55rem;margin-bottom:5px}
+.rsub{color:var(--muted);font-size:.88rem;margin-bottom:22px}
+.rbreakdown{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:20px}
+.rtile{background:var(--surface);border:2px solid var(--pink-border);border-radius:16px;padding:13px 7px;box-shadow:0 3px 10px var(--shadow)}
+.rtile .rn{font-family:'Black Han Sans',sans-serif;font-size:1.7rem}
+.rtile .rl{font-size:.66rem;color:var(--muted);font-weight:800;margin-top:2px}
+.rsection-title{text-align:left;font-family:'Black Han Sans',sans-serif;font-size:.95rem;margin-bottom:8px;display:flex;align-items:center;gap:5px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px}
+.chip{border-radius:99px;padding:4px 12px;font-size:.8rem;font-weight:800}
+.chip-ng{background:#fff0f4;border:1px solid #ffb3c5;color:var(--red)}
+.chip-sk{background:#f2ecff;border:1px solid #c4a0ff;color:var(--purple)}
+.ract{display:flex;flex-direction:column;gap:9px}
+.btn-primary{background:linear-gradient(135deg,var(--pink),var(--pink2));border:none;border-radius:15px;padding:15px;color:#fff;font-family:'Black Han Sans',sans-serif;font-size:1.05rem;cursor:pointer;transition:all .2s;box-shadow:0 4px 16px rgba(255,105,168,.35)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(255,105,168,.45)}
+.btn-yellow{background:linear-gradient(135deg,var(--yellow),var(--yellow2));border:none;border-radius:15px;padding:13px;color:#5a3000;font-family:'Black Han Sans',sans-serif;font-size:.98rem;cursor:pointer;transition:all .2s;box-shadow:0 4px 14px rgba(255,204,0,.3)}
+.btn-yellow:hover{transform:translateY(-2px)}
+.btn-sec{background:var(--surface);border:2px solid var(--pink-border);border-radius:15px;padding:12px;color:var(--pink);font-family:'Black Han Sans',sans-serif;font-size:.92rem;cursor:pointer;transition:all .2s}
+.btn-sec:hover{background:var(--pink-pale);border-color:var(--pink)}
+
+/* ════════════════════
+   LOOKUP (동사원형 클릭)
+════════════════════ */
+.lookup-intro{text-align:center;padding:10px 0 18px;color:var(--muted);font-size:.88rem;line-height:1.6}
+.lookup-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:9px;margin-bottom:16px}
+.lcard{background:var(--surface);border:2px solid var(--pink-border);border-radius:16px;padding:14px 10px;text-align:center;cursor:pointer;transition:all .22s;box-shadow:0 3px 10px var(--shadow);position:relative}
+.lcard:hover{border-color:var(--pink);background:var(--pink-pale);transform:translateY(-2px)}
+.lcard.lc-skip{border-color:#c4a0ff;background:#f9f4ff}
+.lcard.lc-weak{border-color:var(--yellow);background:var(--yellow-pale)}
+.lcard.lc-mastered{border-color:var(--green);background:#e8fff4}
+.lcard-num{font-size:.62rem;color:var(--muted);font-weight:800;margin-bottom:3px}
+.lcard-meaning{font-size:.68rem;color:var(--muted);margin-bottom:3px;line-height:1.3}
+.lcard-word{font-family:'Black Han Sans',sans-serif;font-size:1.25rem;color:var(--pink)}
+.lcard-status{position:absolute;top:7px;right:7px;font-size:.75rem}
+
+/* Verb detail popup */
+.popup-overlay{position:fixed;inset:0;background:rgba(45,18,40,.45);backdrop-filter:blur(4px);z-index:100;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .25s}
+.popup-overlay.show{opacity:1;pointer-events:auto}
+.popup{background:var(--surface);border:3px solid var(--pink-border);border-radius:28px;padding:32px 28px;max-width:400px;width:100%;box-shadow:0 20px 60px rgba(255,105,168,.25);transform:scale(.9);transition:transform .25s;position:relative}
+.popup-overlay.show .popup{transform:scale(1)}
+.popup::before{content:'';position:absolute;top:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--pink),var(--yellow),var(--pink2));border-radius:28px 28px 0 0}
+.popup-close{position:absolute;top:14px;right:14px;background:var(--pink-pale);border:none;border-radius:99px;width:32px;height:32px;font-size:1rem;cursor:pointer;color:var(--pink);font-weight:800;transition:all .2s}
+.popup-close:hover{background:var(--pink);color:#fff}
+.popup-num{font-size:.72rem;color:var(--muted);font-weight:800;letter-spacing:1px;margin-bottom:4px}
+.popup-meaning{font-size:1.05rem;color:var(--muted);font-weight:700;margin-bottom:6px}
+.popup-verb-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:20px}
+.popup-present{font-family:'Black Han Sans',sans-serif;font-size:2.6rem;color:var(--pink);line-height:1}
+.popup-flags{display:flex;gap:6px;flex-wrap:wrap}
+.popup-forms{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px}
+.pform{background:var(--surface2);border-radius:14px;padding:14px;text-align:center;border:2px solid var(--pink-border)}
+.pform .pf-label{font-size:.68rem;color:var(--muted);font-weight:800;margin-bottom:4px}
+.pform .pf-word{font-family:'Black Han Sans',sans-serif;font-size:1.5rem}
+.pform.pf-past .pf-word{color:var(--orange)}
+.pform.pf-pp .pf-word{color:var(--purple)}
+.popup-example{background:var(--yellow-pale);border:2px solid var(--yellow-border);border-radius:14px;padding:14px;font-size:.85rem;color:var(--text);line-height:1.6;text-align:center;font-weight:700}
+.popup-example span{color:var(--pink);font-family:'Black Han Sans',sans-serif;font-size:.9rem}
+
+/* search in lookup */
+.lookup-search-wrap{position:relative;margin-bottom:12px}
+.lookup-search-wrap::before{content:'🔍';position:absolute;left:13px;top:50%;transform:translateY(-50%);font-size:.88rem;pointer-events:none}
+.lookup-search{width:100%;background:var(--surface);border:2px solid var(--pink-border);border-radius:13px;padding:11px 14px 11px 38px;color:var(--text);font-family:'Noto Sans KR',sans-serif;font-size:.9rem;outline:none;transition:border-color .2s;box-shadow:0 2px 8px var(--shadow)}
+.lookup-search:focus{border-color:var(--pink)}
+.lookup-search::placeholder{color:var(--pink2)}
+
+/* filter pills */
+.filter-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.fpill{background:var(--surface);border:2px solid var(--pink-border);border-radius:99px;padding:5px 13px;font-size:.75rem;font-weight:800;cursor:pointer;transition:all .18s;color:var(--muted)}
+.fpill.on{background:var(--pink-pale);border-color:var(--pink);color:var(--pink)}
+.fpill.on-purple{background:#f2ecff;border-color:var(--purple);color:var(--purple)}
+
+/* ════════════════════
+   SKIP LIST
+════════════════════ */
+.word-cards{display:flex;flex-direction:column;gap:8px}
+.wcard{background:var(--surface);border:2px solid var(--pink-border);border-radius:16px;padding:13px 16px;display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;box-shadow:0 2px 8px var(--shadow);transition:all .18s;cursor:pointer}
+.wcard:hover{border-color:var(--pink);transform:translateX(2px)}
+.wcard.wc-skip{border-left:4px solid var(--purple)}
+.wcard.wc-weak{border-left:4px solid var(--orange)}
+.wc-meaning{font-size:.74rem;color:var(--muted);font-weight:800}
+.wc-verbs{display:flex;gap:9px;align-items:baseline;margin-top:3px;flex-wrap:wrap}
+.wc-present{font-family:'Black Han Sans',sans-serif;font-size:1.1rem;color:var(--pink)}
+.wc-sep{color:var(--pink-border);font-size:.75rem}
+.wc-past{font-size:.88rem;color:var(--orange);font-weight:800}
+.wc-pp{font-size:.88rem;color:var(--purple);font-weight:800}
+.wc-right{text-align:right}
+.wc-cnt{font-family:'Black Han Sans',sans-serif;font-size:1.2rem}
+.wc-clabel{font-size:.62rem;color:var(--muted);font-weight:800}
+
+/* screen header */
+.sc-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.sc-title{font-family:'Black Han Sans',sans-serif;font-size:1.3rem;display:flex;align-items:center;gap:7px}
+
+.empty{text-align:center;padding:52px 20px;color:var(--muted)}
+.empty .eb{font-size:3.5rem;display:block;margin-bottom:10px}
+.empty p{font-size:.88rem}
+
+/* all table */
+.all-table{width:100%;border-collapse:separate;border-spacing:0 4px;font-size:.86rem}
+.all-table thead th{background:var(--pink-pale);padding:10px 9px;text-align:left;font-size:.68rem;color:var(--pink);letter-spacing:.8px;font-weight:800;border-bottom:2px solid var(--pink-border)}
+.all-table thead th:first-child{border-radius:9px 0 0 9px}.all-table thead th:last-child{border-radius:0 9px 9px 0}
+.all-table tbody tr td{background:var(--surface);padding:10px 9px;border-top:1px solid rgba(255,182,193,.12);transition:background .15s;cursor:pointer}
+.all-table tbody tr:hover td{background:var(--pink-pale)}
+.all-table tbody tr td:first-child{border-radius:8px 0 0 8px;color:var(--muted);font-size:.72rem}.all-table tbody tr td:last-child{border-radius:0 8px 8px 0}
+.tp{font-family:'Black Han Sans',sans-serif;font-size:1rem;color:var(--pink)}
+.tpa{color:var(--orange);font-weight:800}.tpp{color:var(--purple);font-weight:800}
+.tst{text-align:center;font-size:.82rem}
+
+/* scrollbar */
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:var(--pink-pale)}::-webkit-scrollbar-thumb{background:var(--pink2);border-radius:99px}
+
+/* animations */
+@keyframes slideDown{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pop{0%{transform:scale(.8);opacity:0}60%{transform:scale(1.1)}100%{transform:scale(1);opacity:1}}
+.pop{animation:pop .4s cubic-bezier(.4,0,.2,1) forwards}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+.shake{animation:shake .4s ease}
+
+@media(max-width:480px){
+  .mode-grid{grid-template-columns:1fr}
+  .scorebar{grid-template-columns:repeat(2,1fr)}
+  .rbreakdown{grid-template-columns:repeat(2,1fr)}
+  .irow{grid-template-columns:70px 1fr}
+  .lookup-grid{grid-template-columns:repeat(auto-fill,minmax(110px,1fr))}
+  .popup-forms{grid-template-columns:1fr 1fr}
+}
+
+/* ── iPad / 태블릿 최적화 ── */
+@media(min-width:768px){
+  .wrap{padding:24px 32px 80px}
+  .header{padding:20px 0 26px}
+  .logo{font-size:2rem}
+  .nav-btn{font-size:.85rem;padding:9px 16px}
+  .stile .sval{font-size:1.8rem}
+  .mode-grid{grid-template-columns:1fr 1fr 1fr}
+  .mcard{padding:24px 20px}
+  .micon{font-size:2.4rem}
+  .mtitle{font-size:1.15rem}
+  .mdesc{font-size:.82rem}
+  .qpresent{font-size:4rem}
+  .vfield{font-size:1.5rem;padding:16px 20px}
+  .btn-check,.btn-skip,.btn-next{font-size:1.1rem;padding:18px 20px}
+  .lookup-grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}
+  .lcard-word{font-size:1.5rem}
+  .popup{max-width:480px;padding:36px 32px}
+  .popup-present{font-size:3rem}
+  .pf-word{font-size:1.8rem}
+  .all-table{font-size:.95rem}
+  .all-table thead th{font-size:.75rem;padding:12px}
+  .all-table tbody tr td{padding:13px}
+}
+
+@media(min-width:1024px){
+  .wrap{max-width:860px}
+  .mode-grid{grid-template-columns:repeat(3,1fr)}
+  .lookup-grid{grid-template-columns:repeat(auto-fill,minmax(160px,1fr))}
+}
+
+/* iOS 안전 영역 */
+@supports(padding:max(0px)){
+  .wrap{padding-bottom:max(80px,env(safe-area-inset-bottom,80px))}
+}
+
+/* ── 설치 배너 ── */
+.install-banner{
+  position:fixed;bottom:0;left:0;right:0;
+  background:linear-gradient(135deg,var(--pink),#ff9dca);
+  color:#fff;padding:14px 20px;
+  display:flex;align-items:center;justify-content:space-between;
+  z-index:200;box-shadow:0 -4px 20px rgba(255,105,168,.3);
+  font-family:'Noto Sans KR',sans-serif;font-weight:800;font-size:.88rem;
+  transform:translateY(100%);transition:transform .4s cubic-bezier(.4,0,.2,1);
+}
+.install-banner.show{transform:translateY(0)}
+.install-banner-left{display:flex;align-items:center;gap:10px}
+.install-banner-icon{font-size:2rem}
+.install-banner-text small{display:block;font-weight:400;font-size:.75rem;opacity:.85}
+.install-btn{background:#fff;color:var(--pink);border:none;border-radius:12px;padding:10px 18px;font-family:'Noto Sans KR',sans-serif;font-weight:800;font-size:.85rem;cursor:pointer;white-space:nowrap}
+.install-close{background:rgba(255,255,255,.25);border:none;border-radius:99px;width:28px;height:28px;color:#fff;font-size:1rem;cursor:pointer;font-weight:800;margin-left:8px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- HEADER -->
+<div class="header">
+  <div class="logo">동사<span>마스터</span>💖</div>
+  <div class="header-nav">
+    <button class="nav-btn" onclick="showScreen('lookup')" id="nb-lookup">🔍 동사 찾기</button>
+    <button class="nav-btn" onclick="showScreen('skip-screen')" id="nb-skip">🟣 모르는 단어</button>
+    <button class="nav-btn" onclick="showScreen('weak')" id="nb-weak">🔥 오답노트</button>
+    <button class="nav-btn" onclick="showScreen('all')" id="nb-all">📋 단어표</button>
+  </div>
+</div>
+
+<!-- SCOREBAR -->
+<div class="scorebar">
+  <div class="stile s1"><div class="slabel">총 점수</div><div class="sval" id="st-total">0</div></div>
+  <div class="stile s2"><div class="slabel">라운드</div><div class="sval" id="st-round">1</div></div>
+  <div class="stile s3"><div class="slabel">완료</div><div class="sval" id="st-mastered">0</div></div>
+  <div class="stile s4"><div class="slabel">모르는것</div><div class="sval" id="st-skip">0</div></div>
+</div>
+
+<!-- PROGRESS -->
+<div class="prog-section">
+  <div class="prog-labels"><span>💪 전체 진행률</span><span id="prog-pct">0 / 100</span></div>
+  <div class="prog-track"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+</div>
+
+<!-- ═══ HOME ═══ -->
+<div class="screen on" id="screen-home">
+  <div class="home-hero">
+    <h1>불규칙 동사<br><em>100개 완전정복!</em> 🌟</h1>
+    <p>현재형을 보고 과거형·과거분사형을 직접 입력해야 통과!<br>
+    모르면 SKIP → 모르는 단어 그룹에서 집중 연습 💪<br>
+    <strong>🔍 동사 찾기</strong>에서 동사원형을 누르면 변화형을 바로 확인!</p>
+  </div>
+  <div class="mode-grid">
+    <div class="mcard mc-a" onclick="startQuiz('normal')">
+      <span class="micon">🎯</span>
+      <div class="mtitle">순서대로</div>
+      <div class="mdesc">1번부터 10개씩 순서대로 진행해요</div>
+    </div>
+    <div class="mcard mc-b" onclick="startQuiz('skip')">
+      <span class="micon">🟣</span>
+      <div class="mtitle">모르는 단어</div>
+      <div class="mdesc">SKIP한 단어만 골라서 집중 반복 연습</div>
+      <div class="mbadge mbadge-purple" id="skip-badge">0개</div>
+    </div>
+    <div class="mcard mc-c" onclick="startQuiz('weak')">
+      <span class="micon">🔥</span>
+      <div class="mtitle">오답 집중</div>
+      <div class="mdesc">틀린 단어만 골라서 다시 도전!</div>
+      <div class="mbadge mbadge-orange" id="weak-badge">0개</div>
+    </div>
+    <div class="mcard mc-d" onclick="startQuiz('random')">
+      <span class="micon">🔀</span>
+      <div class="mtitle">랜덤 10개</div>
+      <div class="mdesc">100개 중 무작위로 10개를 뽑아요</div>
+    </div>
+    <div class="mcard mc-e" onclick="showScreen('lookup')">
+      <span class="micon">🔍</span>
+      <div class="mtitle">동사 찾기</div>
+      <div class="mdesc">동사원형을 누르면 과거형·과거분사형을 바로 확인!</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ QUIZ ═══ -->
+<div class="screen" id="screen-quiz">
+  <div class="quiz-top">
+    <div class="round-info">라운드 <strong id="q-round">1</strong> · <span id="q-progress">1/10</span></div>
+    <div class="qdots" id="q-dots"></div>
+  </div>
+  <div class="qcard">
+    <div class="qnum" id="q-num">No.1</div>
+    <div class="qmeaning" id="q-meaning">뜻</div>
+    <div class="qpresent" id="q-present">verb</div>
+    <div class="qflags" id="q-flags"></div>
+    <div class="input-rows">
+      <div class="irow">
+        <div class="ilabel"><strong>과거형</strong>Past</div>
+        <input type="text" class="vfield" id="inp-past" placeholder="과거형 입력…" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false">
+      </div>
+      <div class="irow">
+        <div class="ilabel"><strong>과거분사</strong>P.P.</div>
+        <input type="text" class="vfield" id="inp-pp" placeholder="과거분사 입력…" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false">
+      </div>
+    </div>
+    <div class="ans-reveal" id="ans-reveal">
+      <div class="ans-grid">
+        <div class="agi ag-present"><div class="agl">현재 Present</div><div class="agw" id="ans-present"></div></div>
+        <div class="agi ag-past"><div class="agl">과거 Past</div><div class="agw" id="ans-past"></div></div>
+        <div class="agi ag-pp"><div class="agl">과거분사 P.P.</div><div class="agw" id="ans-pp"></div></div>
+      </div>
+      <div class="rmsg" id="r-msg"></div>
+    </div>
+  </div>
+  <div class="arow">
+    <button class="btn-check" id="btn-check" onclick="checkAnswer()">✅ 확인</button>
+    <button class="btn-skip" id="btn-skip-q" onclick="skipQuestion()">🟣 SKIP</button>
+    <button class="btn-next" id="btn-next" onclick="nextQuestion()" style="display:none">다음 →</button>
+  </div>
+</div>
+
+<!-- ═══ ROUND RESULT ═══ -->
+<div class="screen" id="screen-result">
+  <div class="rscreen">
+    <div class="rbig pop" id="r-big" style="color:var(--pink)">100점</div>
+    <div class="rgrade" id="r-grade">🏆 완벽!</div>
+    <div class="rsub" id="r-sub">10문제 중 10개 정답</div>
+    <div class="rbreakdown">
+      <div class="rtile"><div class="rn" style="color:var(--green)" id="r-correct">0</div><div class="rl">✅ 정답</div></div>
+      <div class="rtile"><div class="rn" style="color:var(--red)" id="r-wrong">0</div><div class="rl">❌ 오답</div></div>
+      <div class="rtile"><div class="rn" style="color:var(--purple)" id="r-skip-cnt">0</div><div class="rl">🟣 SKIP</div></div>
+      <div class="rtile"><div class="rn" style="color:var(--yellow)" id="r-pts">+0</div><div class="rl">⭐ 점수</div></div>
+    </div>
+    <div id="r-skip-sec" style="display:none">
+      <div class="rsection-title">🟣 모르는 단어 그룹에 추가됨</div>
+      <div class="chips" id="r-skip-chips"></div>
+    </div>
+    <div id="r-wrong-sec" style="display:none">
+      <div class="rsection-title">❌ 틀린 단어 (오답노트 추가됨)</div>
+      <div class="chips" id="r-wrong-chips"></div>
+    </div>
+    <div class="ract">
+      <button class="btn-primary" id="btn-continue" onclick="continueQuiz()">계속 도전 →</button>
+      <button class="btn-yellow" id="btn-do-skip" onclick="startQuiz('skip')" style="display:none">🟣 모르는 단어 집중 연습</button>
+      <button class="btn-sec" id="btn-retry-weak" onclick="startQuiz('weak')" style="display:none">🔥 틀린 것만 다시</button>
+      <button class="btn-sec" onclick="showScreen('home')">🏠 처음으로</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ LOOKUP (동사 찾기) ═══ -->
+<div class="screen" id="screen-lookup">
+  <div class="sc-header">
+    <div class="sc-title">🔍 동사 찾기</div>
+    <button class="nav-btn" onclick="showScreen('home')">← 돌아가기</button>
+  </div>
+  <div class="lookup-intro">
+    동사원형 카드를 누르면 <strong style="color:var(--pink)">과거형</strong>과 <strong style="color:var(--purple)">과거분사형</strong>을 바로 확인할 수 있어요! ✨
+  </div>
+  <div class="lookup-search-wrap">
+    <input type="text" class="lookup-search" id="lookup-search" placeholder="단어 검색 (한국어·영어)…" oninput="renderLookup()">
+  </div>
+  <div class="filter-row">
+    <button class="fpill on" onclick="setLookupFilter('all',this)">전체</button>
+    <button class="fpill" onclick="setLookupFilter('skip',this)">🟣 모르는것</button>
+    <button class="fpill" onclick="setLookupFilter('weak',this)">🔥 오답</button>
+    <button class="fpill" onclick="setLookupFilter('mastered',this)">✅ 완료</button>
+  </div>
+  <div class="lookup-grid" id="lookup-grid"></div>
+</div>
+
+<!-- ═══ SKIP LIST ═══ -->
+<div class="screen" id="screen-skip-screen">
+  <div class="sc-header">
+    <div class="sc-title">🟣 모르는 단어 그룹</div>
+    <button class="nav-btn" onclick="showScreen('home')">← 돌아가기</button>
+  </div>
+  <div class="word-cards" id="skip-list"></div>
+</div>
+
+<!-- ═══ WEAK WORDS ═══ -->
+<div class="screen" id="screen-weak">
+  <div class="sc-header">
+    <div class="sc-title">🔥 오답노트</div>
+    <button class="nav-btn" onclick="showScreen('home')">← 돌아가기</button>
+  </div>
+  <div class="filter-row">
+    <button class="fpill on" onclick="filterWeak('all',this)">전체</button>
+    <button class="fpill" onclick="filterWeak('many',this)">3회 이상</button>
+    <button class="fpill" onclick="filterWeak('few',this)">1~2회</button>
+  </div>
+  <div class="word-cards" id="weak-list"></div>
+</div>
+
+<!-- ═══ ALL TABLE ═══ -->
+<div class="screen" id="screen-all">
+  <div class="sc-header">
+    <div class="sc-title">📋 전체 단어표</div>
+    <button class="nav-btn" onclick="showScreen('home')">← 돌아가기</button>
+  </div>
+  <div class="lookup-search-wrap">
+    <input type="text" class="lookup-search" id="search-inp" placeholder="단어 검색 (한국어·영어)…" oninput="filterAll()">
+  </div>
+  <table class="all-table">
+    <thead><tr><th>#</th><th>뜻</th><th>현재형</th><th>과거형</th><th>과거분사</th><th>상태</th></tr></thead>
+    <tbody id="all-tbody"></tbody>
+  </table>
+</div>
+
+<!-- ═══ POPUP ═══ -->
+<div class="popup-overlay" id="popup-overlay" onclick="closePopup(event)">
+  <div class="popup" id="popup">
+    <button class="popup-close" onclick="closePopupDirect()">✕</button>
+    <div class="popup-num" id="pop-num">No.1</div>
+    <div class="popup-meaning" id="pop-meaning">뜻</div>
+    <div class="popup-verb-row">
+      <div class="popup-present" id="pop-present">verb</div>
+      <div class="popup-flags" id="pop-flags"></div>
+    </div>
+    <div class="popup-forms">
+      <div class="pform pf-past">
+        <div class="pf-label">과거형 Past</div>
+        <div class="pf-word" id="pop-past">—</div>
+      </div>
+      <div class="pform pf-pp">
+        <div class="pf-label">과거분사 P.P.</div>
+        <div class="pf-word" id="pop-pp">—</div>
+      </div>
+    </div>
+    <div class="popup-example" id="pop-example"></div>
+  </div>
+</div>
+
+<script>
+/* ═══ DATA ═══ */
+const VERBS=[
+  [0,"~이다/되다/있다","be(am/is)","was","been"],
+  [1,"~이다/되다/있다","be(are)","were","been"],
+  [2,"(아이를)낳다/참다","bear","bore","born"],
+  [3,"~되다","become","became","become"],
+  [4,"시작하다","begin","began","begun"],
+  [5,"묶다","bind","bound","bound"],
+  [6,"물다","bite","bit","bitten"],
+  [7,"불다","blow","blew","blown"],
+  [8,"부수다/깨뜨리다","break","broke","broken"],
+  [9,"가져오다","bring","brought","brought"],
+  [10,"건물짓다/건설하다","build","built","built"],
+  [11,"사다","buy","bought","bought"],
+  [12,"던지다","cast","cast","cast"],
+  [13,"잡다","catch","caught","caught"],
+  [14,"선택하다","choose","chose","chosen"],
+  [15,"오다","come","came","come"],
+  [16,"비용이 들다","cost","cost","cost"],
+  [17,"베다/자르다","cut","cut","cut"],
+  [18,"(땅을) 파다","dig","dug","dug"],
+  [19,"~을 하다","do/does","did","done"],
+  [20,"끌다/그리다","draw","drew","drawn"],
+  [21,"마시다","drink","drank","drunk"],
+  [22,"운전하다","drive","drove","driven"],
+  [23,"먹다","eat","ate","eaten"],
+  [24,"떨어지다","fall","fell","fallen"],
+  [25,"느끼다","feel","felt","felt"],
+  [26,"싸우다","fight","fought","fought"],
+  [27,"발견하다","find","found","found"],
+  [28,"날다","fly","flew","flown"],
+  [29,"금지하다","forbid","forbade","forbidden"],
+  [30,"잊어버리다","forget","forgot","forgotten"],
+  [31,"용서하다","forgive","forgave","forgiven"],
+  [32,"얼다","freeze","froze","frozen"],
+  [33,"얻다/사다","get","got","got/gotten"],
+  [34,"주다","give","gave","given"],
+  [35,"가다","go","went","gone"],
+  [36,"자라다","grow","grew","grown"],
+  [37,"매달다/걸다","hang","hung","hung"],
+  [38,"가지다","have/has","had","had"],
+  [39,"듣다","hear","heard","heard"],
+  [40,"숨다","hide","hid","hidden"],
+  [41,"때리다/치다","hit","hit","hit"],
+  [42,"붙잡다","hold","held","held"],
+  [43,"다치다","hurt","hurt","hurt"],
+  [44,"지키다/간직하다","keep","kept","kept"],
+  [45,"알다","know","knew","known"],
+  [46,"(알을) 놓다","lay","laid","laid"],
+  [47,"이끌다/지도하다","lead","led","led"],
+  [48,"떠나다/남겨두다","leave","left","left"],
+  [49,"빌리다","lend","lent","lent"],
+  [50,"시키다","let","let","let"],
+  [51,"눕다","lie","lay","lain"],
+  [52,"(경기에)지다/잃다","lose","lost","lost"],
+  [53,"만들다","make","made","made"],
+  [54,"구부리다","bend","bent","bent"],
+  [55,"~을 의미하다","mean","meant","meant"],
+  [56,"만나다","meet","met","met"],
+  [57,"실수하다","mistake","mistook","mistaken"],
+  [58,"(돈을) 지불하다","pay","paid","paid"],
+  [59,"두다/놓다/넣다","put","put","put"],
+  [60,"읽다","read","read","read"],
+  [61,"(말·자전거) 타다","ride","rode","ridden"],
+  [62,"(벨이) 울리다","ring","rang","rung"],
+  [63,"오르다","rise","rose","risen"],
+  [64,"달리다","run","ran","run"],
+  [65,"말하다","say","said","said"],
+  [66,"보다","see","saw","seen"],
+  [67,"찾다/추구하다","seek","sought","sought"],
+  [68,"팔다","sell","sold","sold"],
+  [69,"보내다","send","sent","sent"],
+  [70,"놓아두다","set","set","set"],
+  [71,"흔들다","shake","shook","shaken"],
+  [72,"빛나다","shine","shone","shone"],
+  [73,"쏘다","shoot","shot","shot"],
+  [74,"보여주다","show","showed","shown"],
+  [75,"닫다","shut","shut","shut"],
+  [76,"노래하다","sing","sang","sung"],
+  [77,"가라앉다/침몰하다","sink","sank","sunk"],
+  [78,"앉다","sit","sat","sat"],
+  [79,"잠자다","sleep","slept","slept"],
+  [80,"냄새가 나다","smell","smelt","smelt"],
+  [81,"말하다","speak","spoke","spoken"],
+  [82,"(돈·시간) 소비하다","spend","spent","spent"],
+  [83,"일어서다","stand","stood","stood"],
+  [84,"훔치다","steal","stole","stolen"],
+  [85,"치다","strike","struck","struck"],
+  [86,"헤엄치다","swim","swam","swum"],
+  [87,"가지다/데려가다","take","took","taken"],
+  [88,"가르치다","teach","taught","taught"],
+  [89,"찢다/눈물흘리다","tear","tore","torn"],
+  [90,"말하다","tell","told","told"],
+  [91,"생각하다","think","thought","thought"],
+  [92,"던지다","throw","threw","thrown"],
+  [93,"이해하다","understand","understood","understood"],
+  [94,"입다","wear","wore","worn"],
+  [95,"이기다","win","won","won"],
+  [96,"쓰다","write","wrote","written"],
+  [97,"울다","weep","wept","wept"],
+  [98,"깨우다","wake","woke","woken"],
+  [99,"다루다","deal","dealt","dealt"],
+];
+
+/* ═══ STATE ═══ */
+const S={
+  totalScore:0, round:1,
+  masteredSet:new Set(), wrongMap:{}, skipSet:new Set(), seenSet:new Set(),
+  mode:'normal', queue:[], qIdx:0,
+  rCorrect:0, rWrong:0, rSkip:0, rPts:0,
+  rWrongList:[], rSkipList:[],
+};
+
+function save(){
+  try{localStorage.setItem('vm2',JSON.stringify({
+    totalScore:S.totalScore,round:S.round,
+    masteredSet:[...S.masteredSet],wrongMap:S.wrongMap,
+    skipSet:[...S.skipSet],seenSet:[...S.seenSet]
+  }));}catch(e){}
+}
+function load(){
+  try{
+    const d=JSON.parse(localStorage.getItem('vm2')||'null');
+    if(!d)return;
+    S.totalScore=d.totalScore||0; S.round=d.round||1;
+    S.masteredSet=new Set(d.masteredSet||[]);
+    S.wrongMap=d.wrongMap||{};
+    S.skipSet=new Set(d.skipSet||[]);
+    S.seenSet=new Set(d.seenSet||[]);
+  }catch(e){}
+}
+
+function norm(s){return s.trim().toLowerCase().replace(/\s+/g,'').replace(/[()]/g,'')}
+function match(inp,correct){
+  const i=norm(inp);
+  return correct.split('/').map(p=>norm(p)).some(p=>p===i);
+}
+function shuffle(a){
+  const b=[...a];
+  for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}
+  return b;
+}
+function updateUI(){
+  document.getElementById('st-total').textContent=S.totalScore;
+  document.getElementById('st-round').textContent=S.round;
+  document.getElementById('st-mastered').textContent=S.masteredSet.size;
+  document.getElementById('st-skip').textContent=S.skipSet.size;
+  const pct=S.masteredSet.size;
+  document.getElementById('prog-fill').style.width=pct+'%';
+  document.getElementById('prog-pct').textContent=pct+' / 100';
+  const sb=document.getElementById('skip-badge');
+  const wb=document.getElementById('weak-badge');
+  const wc=Object.keys(S.wrongMap).length;
+  if(S.skipSet.size>0){sb.textContent=S.skipSet.size+'개';sb.style.display='';}else sb.style.display='none';
+  if(wc>0){wb.textContent=wc+'개';wb.style.display='';}else wb.style.display='none';
+}
+
+/* ═══ SCREENS ═══ */
+let lookupFilter='all';
+function showScreen(name){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));
+  document.getElementById('screen-'+name).classList.add('on');
+  if(name==='lookup')renderLookup();
+  if(name==='skip-screen')renderSkipList();
+  if(name==='weak')renderWeakList('all');
+  if(name==='all')renderAllTable();
+}
+
+/* ═══ QUIZ ═══ */
+function startQuiz(mode){
+  S.mode=mode; S.rCorrect=0; S.rWrong=0; S.rSkip=0; S.rPts=0;
+  S.rWrongList=[]; S.rSkipList=[];
+  let pool=[];
+  if(mode==='skip'){
+    pool=[...S.skipSet];
+    if(pool.length===0){alert('아직 SKIP한 단어가 없어요! 먼저 퀴즈를 풀어보세요 😊');return;}
+    pool=shuffle(pool).slice(0,10);
+  }else if(mode==='weak'){
+    pool=Object.keys(S.wrongMap).map(Number);
+    if(pool.length===0){alert('아직 틀린 단어가 없어요! 먼저 퀴즈를 풀어보세요 😊');return;}
+    pool.sort((a,b)=>(S.wrongMap[b]||0)-(S.wrongMap[a]||0));
+    pool=pool.slice(0,10);
+  }else if(mode==='random'){
+    pool=shuffle([...Array(100).keys()]).slice(0,10);
+  }else{
+    const base=(S.round-1)*10;
+    pool=[...Array(10).keys()].map(i=>(base+i)%100);
+  }
+  S.queue=pool; S.qIdx=0;
+  buildDots(); loadQ(); showScreen('quiz');
+}
+
+function buildDots(){
+  const c=document.getElementById('q-dots');
+  c.innerHTML=S.queue.map((_, i)=>`<div class="qdot${i===0?' cur':''}" id="dot-${i}"></div>`).join('');
+}
+function updateDot(idx,res){
+  const d=document.getElementById('dot-'+idx);
+  if(!d)return;
+  d.className='qdot '+(res==='ok'?'ok':res==='sk'?'sk':'ng');
+  const n=document.getElementById('dot-'+(idx+1));
+  if(n)n.className='qdot cur';
+}
+
+function loadQ(){
+  const vi=S.queue[S.qIdx];
+  const v=VERBS[vi];
+  S.seenSet.add(vi);
+  document.getElementById('q-round').textContent=S.round;
+  document.getElementById('q-progress').textContent=(S.qIdx+1)+'/'+S.queue.length;
+  document.getElementById('q-num').textContent='No.'+(vi+1);
+  document.getElementById('q-meaning').textContent=v[1];
+  document.getElementById('q-present').textContent=v[2];
+  // flags
+  const ff=document.getElementById('q-flags');
+  let fh='';
+  if((S.wrongMap[vi]||0)>=2)fh+=`<span class="flag flag-weak">⚠️ 자주 틀리는 단어</span>`;
+  if(S.skipSet.has(vi))fh+=`<span class="flag flag-skip">🟣 모르는 단어</span>`;
+  ff.innerHTML=fh;
+  // inputs
+  const ip=document.getElementById('inp-past');
+  const ipp=document.getElementById('inp-pp');
+  ip.value=''; ipp.value='';
+  ip.className='vfield'; ipp.className='vfield';
+  ip.disabled=false; ipp.disabled=false;
+  document.getElementById('ans-reveal').classList.remove('show');
+  document.getElementById('r-msg').textContent='';
+  document.getElementById('btn-check').style.display='';
+  document.getElementById('btn-check').disabled=false;
+  document.getElementById('btn-skip-q').style.display='';
+  document.getElementById('btn-next').style.display='none';
+  ip.focus();
+}
+
+function checkAnswer(){
+  const vi=S.queue[S.qIdx];
+  const v=VERBS[vi];
+  const pv=document.getElementById('inp-past').value;
+  const ppv=document.getElementById('inp-pp').value;
+  if(!pv.trim()||!ppv.trim()){
+    const emp=!pv.trim()?document.getElementById('inp-past'):document.getElementById('inp-pp');
+    emp.classList.add('shake');setTimeout(()=>emp.classList.remove('shake'),400);emp.focus();return;
+  }
+  const pOk=match(pv,v[3]);
+  const ppOk=match(ppv,v[4]);
+  const allOk=pOk&&ppOk;
+  document.getElementById('inp-past').className='vfield '+(pOk?'ok':'ng');
+  document.getElementById('inp-pp').className='vfield '+(ppOk?'ok':'ng');
+  document.getElementById('inp-past').disabled=true;
+  document.getElementById('inp-pp').disabled=true;
+  // reveal
+  document.getElementById('ans-present').textContent=v[2];
+  document.getElementById('ans-past').textContent=v[3];
+  document.getElementById('ans-pp').textContent=v[4];
+  document.getElementById('ans-reveal').classList.add('show');
+  const msg=document.getElementById('r-msg');
+  if(allOk){
+    const msgs=['🎉 완벽해요!','⭐ 대단해요!','🌟 굿!','💖 맞았어요!'];
+    msg.textContent=msgs[Math.floor(Math.random()*msgs.length)];
+    msg.className='rmsg ok';
+    S.rCorrect++; S.rPts+=10; S.totalScore+=10;
+    S.masteredSet.add(vi);
+    // if they got it right, reduce wrongMap
+    if(S.wrongMap[vi]){S.wrongMap[vi]=Math.max(0,S.wrongMap[vi]-1);if(S.wrongMap[vi]===0)delete S.wrongMap[vi];}
+    // remove from skip if correct
+    S.skipSet.delete(vi);
+    updateDot(S.qIdx,'ok');
+  }else{
+    let parts=[];
+    if(!pOk)parts.push('과거형: '+v[3]);
+    if(!ppOk)parts.push('과거분사: '+v[4]);
+    msg.textContent='❌ 정답 → '+parts.join(', ');
+    msg.className='rmsg ng';
+    S.rWrong++;
+    S.wrongMap[vi]=(S.wrongMap[vi]||0)+1;
+    S.rWrongList.push(v[2]);
+    if(!pOk){document.getElementById('inp-past').classList.add('shake');}
+    if(!ppOk){document.getElementById('inp-pp').classList.add('shake');}
+    updateDot(S.qIdx,'ng');
+  }
+  document.getElementById('btn-check').style.display='none';
+  document.getElementById('btn-skip-q').style.display='none';
+  document.getElementById('btn-next').style.display='';
+  updateUI(); save();
+}
+
+function skipQuestion(){
+  const vi=S.queue[S.qIdx];
+  const v=VERBS[vi];
+  S.skipSet.add(vi);
+  S.rSkip++; S.rSkipList.push(v[2]);
+  // reveal
+  document.getElementById('ans-present').textContent=v[2];
+  document.getElementById('ans-past').textContent=v[3];
+  document.getElementById('ans-pp').textContent=v[4];
+  document.getElementById('ans-reveal').classList.add('show');
+  const msg=document.getElementById('r-msg');
+  msg.textContent='🟣 모르는 단어 그룹에 추가됐어요! 나중에 집중 연습해봐요 💪';
+  msg.className='rmsg sk';
+  document.getElementById('inp-past').disabled=true;
+  document.getElementById('inp-pp').disabled=true;
+  document.getElementById('btn-check').style.display='none';
+  document.getElementById('btn-skip-q').style.display='none';
+  document.getElementById('btn-next').style.display='';
+  updateDot(S.qIdx,'sk');
+  updateUI(); save();
+}
+
+function nextQuestion(){
+  S.qIdx++;
+  if(S.qIdx>=S.queue.length)finishRound();
+  else loadQ();
+}
+
+function finishRound(){
+  const total=S.queue.length;
+  const pct=Math.round((S.rCorrect/total)*100);
+  document.getElementById('r-big').textContent=pct+'점';
+  document.getElementById('r-big').className='rbig pop';
+  let grade,color;
+  if(pct===100){grade='🏆 완벽해요!';color='var(--pink)';}
+  else if(pct>=80){grade='🎉 잘했어요!';color='var(--orange)';}
+  else if(pct>=60){grade='💪 좋아요!';color='var(--purple)';}
+  else if(pct>=40){grade='📚 조금 더!';color='var(--yellow)';}
+  else{grade='🔥 다시 도전!';color='var(--red)';}
+  document.getElementById('r-big').style.color=color;
+  document.getElementById('r-grade').textContent=grade;
+  document.getElementById('r-sub').textContent=total+'문제 중 '+S.rCorrect+'개 정답';
+  document.getElementById('r-correct').textContent=S.rCorrect;
+  document.getElementById('r-wrong').textContent=S.rWrong;
+  document.getElementById('r-skip-cnt').textContent=S.rSkip;
+  document.getElementById('r-pts').textContent='+'+S.rPts;
+  // skip chips
+  const rss=document.getElementById('r-skip-sec');
+  if(S.rSkipList.length>0){
+    rss.style.display='';
+    document.getElementById('r-skip-chips').innerHTML=S.rSkipList.map(w=>`<div class="chip chip-sk">${w}</div>`).join('');
+    document.getElementById('btn-do-skip').style.display='';
+  }else{rss.style.display='none';document.getElementById('btn-do-skip').style.display='none';}
+  // wrong chips
+  const rws=document.getElementById('r-wrong-sec');
+  if(S.rWrongList.length>0){
+    rws.style.display='';
+    document.getElementById('r-wrong-chips').innerHTML=S.rWrongList.map(w=>`<div class="chip chip-ng">${w}</div>`).join('');
+    document.getElementById('btn-retry-weak').style.display='';
+  }else{rws.style.display='none';document.getElementById('btn-retry-weak').style.display='none';}
+  // continue btn
+  const cb=document.getElementById('btn-continue');
+  if(S.mode==='normal'){
+    S.round++; save();
+    const ns=(S.round-1)*10;
+    if(ns>=100){cb.textContent='🎊 전체 완료! 다시 처음부터';cb.onclick=()=>{S.round=1;save();showScreen('home');};}
+    else{cb.textContent=`다음 ${ns+1}~${Math.min(ns+10,100)}번 →`;cb.onclick=continueQuiz;}
+  }else{S.round++;save();cb.textContent='다시 도전 →';cb.onclick=continueQuiz;}
+  showScreen('result');
+}
+function continueQuiz(){startQuiz(S.mode);}
+
+/* ═══ LOOKUP ═══ */
+function setLookupFilter(f,el){
+  lookupFilter=f;
+  document.querySelectorAll('#screen-lookup .fpill').forEach(p=>{p.classList.remove('on','on-purple');});
+  el.classList.add(f==='skip'||f==='weak'?'on-purple':'on');
+  renderLookup();
+}
+
+function renderLookup(){
+  const q=(document.getElementById('lookup-search').value||'').toLowerCase();
+  const grid=document.getElementById('lookup-grid');
+  let items=VERBS.filter(v=>{
+    if(q&&!v[1].includes(q)&&!v[2].toLowerCase().includes(q)&&!v[3].toLowerCase().includes(q)&&!v[4].toLowerCase().includes(q))return false;
+    if(lookupFilter==='skip')return S.skipSet.has(v[0]);
+    if(lookupFilter==='weak')return S.wrongMap[v[0]]>0;
+    if(lookupFilter==='mastered')return S.masteredSet.has(v[0])&&!S.wrongMap[v[0]];
+    return true;
+  });
+  if(items.length===0){
+    grid.innerHTML=`<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--muted);font-size:.9rem">검색 결과가 없어요 🥺</div>`;
+    return;
+  }
+  grid.innerHTML=items.map(v=>{
+    const isSkip=S.skipSet.has(v[0]);
+    const isWeak=(S.wrongMap[v[0]]||0)>0;
+    const isMastered=S.masteredSet.has(v[0])&&!isWeak;
+    let cls='lcard';
+    let status='';
+    if(isSkip){cls+=' lc-skip';status='🟣';}
+    else if(isWeak){cls+=' lc-weak';status='🔥';}
+    else if(isMastered){cls+=' lc-mastered';status='✅';}
+    return `<div class="${cls}" onclick="openPopup(${v[0]})">
+      ${status?`<div class="lcard-status">${status}</div>`:''}
+      <div class="lcard-num">No.${v[0]+1}</div>
+      <div class="lcard-meaning">${v[1]}</div>
+      <div class="lcard-word">${v[2]}</div>
+    </div>`;
+  }).join('');
+}
+
+function openPopup(idx){
+  const v=VERBS[idx];
+  document.getElementById('pop-num').textContent='No.'+(idx+1);
+  document.getElementById('pop-meaning').textContent=v[1];
+  document.getElementById('pop-present').textContent=v[2];
+  document.getElementById('pop-past').textContent=v[3];
+  document.getElementById('pop-pp').textContent=v[4];
+  // flags
+  const pf=document.getElementById('pop-flags');
+  let fh='';
+  if(S.skipSet.has(idx))fh+=`<span class="flag flag-skip">🟣 모르는 단어</span>`;
+  if((S.wrongMap[idx]||0)>=2)fh+=`<span class="flag flag-weak">⚠️ 자주 틀림</span>`;
+  if(S.masteredSet.has(idx)&&!(S.wrongMap[idx]))fh+=`<span class="flag" style="background:#e8fff4;border:1px solid var(--green);color:var(--green)">✅ 완료</span>`;
+  pf.innerHTML=fh;
+  // example pattern
+  const examples={
+    "was":"I was happy yesterday.",
+    "were":"They were at school.",
+    "bore":"She bore three children.",
+    "began":"He began to run.",
+    "broke":"She broke the window.",
+    "brought":"He brought a gift.",
+    "built":"They built a house.",
+    "bought":"I bought a book.",
+    "came":"She came home.",
+    "went":"He went to school.",
+    "ate":"We ate pizza.",
+    "fell":"The leaf fell down.",
+    "felt":"She felt happy.",
+    "found":"I found my key.",
+    "flew":"The bird flew away.",
+    "forgot":"He forgot my name.",
+    "got":"She got a letter.",
+    "gave":"He gave me a pen.",
+    "heard":"I heard a noise.",
+    "kept":"She kept her promise.",
+    "knew":"I knew the answer.",
+    "left":"He left early.",
+    "lost":"I lost my bag.",
+    "made":"She made a cake.",
+    "met":"We met yesterday.",
+    "paid":"He paid the bill.",
+    "ran":"She ran fast.",
+    "said":"He said hello.",
+    "saw":"I saw a dog.",
+    "sold":"They sold the house.",
+    "spoke":"She spoke clearly.",
+    "stood":"He stood up.",
+    "took":"She took my hand.",
+    "taught":"He taught math.",
+    "told":"She told me a story.",
+    "thought":"I thought it was easy.",
+    "wrote":"He wrote a letter.",
+  };
+  const ex=examples[v[3].split('/')[0].toLowerCase()];
+  const exEl=document.getElementById('pop-example');
+  if(ex){
+    const hi=ex.replace(new RegExp('\\b'+v[3].split('/')[0]+'\\b','i'),`<span>${v[3].split('/')[0]}</span>`);
+    exEl.innerHTML='📝 예문: '+hi;
+  }else{
+    exEl.innerHTML=`📝 <span>${v[2]}</span> → <span style="color:var(--orange)">${v[3]}</span> → <span style="color:var(--purple)">${v[4]}</span>`;
+  }
+  document.getElementById('popup-overlay').classList.add('show');
+}
+function closePopup(e){if(e.target===document.getElementById('popup-overlay'))closePopupDirect();}
+function closePopupDirect(){document.getElementById('popup-overlay').classList.remove('show');}
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape')closePopupDirect();
+  if(e.key==='Enter'){
+    const q=document.getElementById('screen-quiz');
+    if(!q.classList.contains('on'))return;
+    const nb=document.getElementById('btn-next');
+    if(nb.style.display!=='none')nextQuestion();
+    else checkAnswer();
+  }
+});
+
+/* ═══ SKIP LIST ═══ */
+function renderSkipList(){
+  const c=document.getElementById('skip-list');
+  if(S.skipSet.size===0){
+    c.innerHTML=`<div class="empty"><span class="eb">🎉</span><p>아직 SKIP한 단어가 없어요!<br>퀴즈 중 모르는 단어가 있으면 SKIP 버튼을 누르세요.</p></div>`;
+    return;
+  }
+  const items=[...S.skipSet].sort((a,b)=>a-b);
+  c.innerHTML=items.map(i=>{
+    const v=VERBS[i];
+    return `<div class="wcard wc-skip" onclick="openPopup(${i})">
+      <div>
+        <div class="wc-meaning">${v[1]}</div>
+        <div class="wc-verbs">
+          <span class="wc-present">${v[2]}</span>
+          <span class="wc-sep">→</span>
+          <span class="wc-past">${v[3]}</span>
+          <span class="wc-sep">/</span>
+          <span class="wc-pp">${v[4]}</span>
+        </div>
+      </div>
+      <div class="wc-right"><div class="wc-cnt" style="color:var(--purple)">🟣</div><div class="wc-clabel">모르는것</div></div>
+    </div>`;
+  }).join('');
+}
+
+/* ═══ WEAK LIST ═══ */
+let weakFilter='all';
+function filterWeak(f,el){
+  weakFilter=f;
+  document.querySelectorAll('#screen-weak .fpill').forEach(p=>p.classList.remove('on','on-purple'));
+  el.classList.add('on');
+  renderWeakList(f);
+}
+function renderWeakList(f){
+  const c=document.getElementById('weak-list');
+  let keys=Object.keys(S.wrongMap).map(Number);
+  if(f==='many')keys=keys.filter(i=>S.wrongMap[i]>=3);
+  else if(f==='few')keys=keys.filter(i=>S.wrongMap[i]>=1&&S.wrongMap[i]<3);
+  keys.sort((a,b)=>(S.wrongMap[b]||0)-(S.wrongMap[a]||0));
+  if(keys.length===0){
+    c.innerHTML=`<div class="empty"><span class="eb">🌟</span><p>해당 조건의 오답 단어가 없어요!</p></div>`;
+    return;
+  }
+  c.innerHTML=keys.map(i=>{
+    const v=VERBS[i];
+    const m=S.wrongMap[i]||0;
+    return `<div class="wcard wc-weak" onclick="openPopup(${i})">
+      <div>
+        <div class="wc-meaning">${v[1]}</div>
+        <div class="wc-verbs">
+          <span class="wc-present">${v[2]}</span>
+          <span class="wc-sep">→</span>
+          <span class="wc-past">${v[3]}</span>
+          <span class="wc-sep">/</span>
+          <span class="wc-pp">${v[4]}</span>
+        </div>
+      </div>
+      <div class="wc-right"><div class="wc-cnt" style="color:var(--orange)">${m}회</div><div class="wc-clabel">틀림</div></div>
+    </div>`;
+  }).join('');
+}
+
+/* ═══ ALL TABLE ═══ */
+function renderAllTable(){filterAll();}
+function filterAll(){
+  const q=(document.getElementById('search-inp').value||'').toLowerCase();
+  const tb=document.getElementById('all-tbody');
+  const rows=VERBS.filter(v=>!q||v[1].includes(q)||v[2].toLowerCase().includes(q)||v[3].toLowerCase().includes(q)||v[4].toLowerCase().includes(q));
+  tb.innerHTML=rows.map(v=>{
+    const i=v[0];
+    const miss=S.wrongMap[i]||0;
+    let st='—';
+    if(S.skipSet.has(i))st='🟣';
+    else if(miss>=3)st=`🔥${miss}`;
+    else if(miss>0)st=`❌${miss}`;
+    else if(S.masteredSet.has(i))st='✅';
+    else if(S.seenSet.has(i))st='👀';
+    return `<tr onclick="openPopup(${i})">
+      <td>${i+1}</td><td>${v[1]}</td>
+      <td class="tp">${v[2]}</td>
+      <td class="tpa">${v[3]}</td>
+      <td class="tpp">${v[4]}</td>
+      <td class="tst">${st}</td>
+    </tr>`;
+  }).join('');
+}
+
+/* ═══ BOOT ═══ */
+load(); updateUI();
+</script>
+
+<!-- 홈 화면 설치 배너 -->
+<div class="install-banner" id="install-banner">
+  <div class="install-banner-left">
+    <div class="install-banner-icon">💖</div>
+    <div class="install-banner-text">
+      홈 화면에 추가하면 앱처럼 쓸 수 있어요!
+      <small>Safari → 공유 버튼 → 홈 화면에 추가</small>
+    </div>
+  </div>
+  <button class="install-btn" id="install-btn">설치하기</button>
+  <button class="install-close" onclick="closeBanner()">✕</button>
+</div>
+
+<script>
+// ── PWA 설치 배너 ──
+let deferredPrompt = null;
+
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  deferredPrompt = e;
+  setTimeout(() => {
+    document.getElementById('install-banner').classList.add('show');
+  }, 3000);
+});
+
+document.getElementById('install-btn').addEventListener('click', async () => {
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    const result = await deferredPrompt.userChoice;
+    deferredPrompt = null;
+  }
+  closeBanner();
+});
+
+function closeBanner() {
+  document.getElementById('install-banner').classList.remove('show');
+  localStorage.setItem('banner_dismissed', '1');
+}
+
+// iOS Safari: 이미 설치됐으면 배너 숨김
+if (window.navigator.standalone) {
+  document.getElementById('install-banner').style.display = 'none';
+}
+if (localStorage.getItem('banner_dismissed')) {
+  document.getElementById('install-banner').style.display = 'none';
+}
+
+// iOS에서는 설치 안내 텍스트만 표시
+const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+if (isIOS && !window.navigator.standalone) {
+  setTimeout(() => {
+    const b = document.getElementById('install-banner');
+    b.querySelector('.install-banner-text').innerHTML =
+      '홈 화면에 추가하면 앱처럼 써요! 📱<small>Safari 하단 공유버튼 → "홈 화면에 추가"</small>';
+    document.getElementById('install-btn').style.display = 'none';
+    if (!localStorage.getItem('banner_dismissed')) b.classList.add('show');
+  }, 2500);
+}
+
+// ── Service Worker 등록 ──
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js').catch(() => {});
+}
+</script>
+</body>
+</html>
